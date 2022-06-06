@@ -1,4 +1,4 @@
-# Chapter 1 Day 1 Quests
+# Chapter 1.0 Day 1 Quests
 
 **1. Explain what the Blockchain is in your own words. You can read this to help you, but you don't have to: https://www.investopedia.com/terms/b/blockchain.asp**
 
