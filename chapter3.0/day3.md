@@ -21,7 +21,7 @@ pub contract Traveler {
   }
   
   pub fun getCurrency(key: String): &Country {
-    return (&self.countryInformation as &Country?)!
+    return (&self.countryInformation[key] as &Country?)!
   }
   
   init() {
