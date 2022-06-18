@@ -13,7 +13,7 @@ pub contract Traveler {
     pub let language: String
     pub let currency: String
     
-    init(_population: Int, _language: String, _currency: Int) {
+    init(_population: Int, _language: String, _currency: String) {
       self.population = _population
       self.language = _language
       self.currency = _currency
