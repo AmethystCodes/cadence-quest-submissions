@@ -11,7 +11,7 @@ When creating an NFT using a resource is better than using a struct because it's
 
 **3. What is the keyword to make a new resource?**
 
-```javascript
+```cadence
 create
 ```
 
@@ -21,7 +21,7 @@ No, a resource cannot be created in a script or transaction. A resource can *ONL
 
 **5. What is the type of the resource below?**
 
-```javascript
+```cadence
 pub resource Jacob {
 
 }
@@ -31,7 +31,7 @@ The type of the resource is `Jacob`
 
 **6. Let's play the "I Spy" game from when we were kids. I Spy 4 things wrong with this code. Please fix them.**
 
-```javascript
+```cadence
 pub contract Test {
 
     // Hint: There's nothing wrong here ;)
