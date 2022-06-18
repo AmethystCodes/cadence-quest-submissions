@@ -2,7 +2,7 @@
 
 **1. Deploy a new contract that has a Struct of your choosing inside of it (must be different than Profile).**
 
-```javascript
+```cadence
 pub contract Information {
 
     pub struct History {
@@ -25,7 +25,7 @@ pub contract Information {
 
 **2. Create a dictionary or array that contains the Struct you defined.**
 
-```javascript
+```cadence
 pub contract Information {
 
     pub var patientHistory: {Address: History}
@@ -53,7 +53,7 @@ pub contract Information {
 
 **3. Create a function to add to that array/dictionary.**
 
-```javascript
+```cadence
 pub contract Information {
 
     pub var patientHistory: {Address: History}
@@ -85,7 +85,7 @@ pub contract Information {
 
 **4. Add a transaction to call that function in step 3.**
 
-```javascript
+```cadence
 import Information from 0x01
 
 transaction(diabetes: Bool, highHDL: Bool, highBloodPressure: Bool, account: Address) {
@@ -106,7 +106,7 @@ transaction(diabetes: Bool, highHDL: Bool, highBloodPressure: Bool, account: Add
 
 **5. Add a script to read the Struct you defined.**
 
-```javascript
+```cadence
 import Information from 0x01
 
 pub fun main(account: Address): Information.History? {
