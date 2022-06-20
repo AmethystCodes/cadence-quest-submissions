@@ -4,10 +4,10 @@ For today's quest, you will be looking at a contract and a script. You will be l
 
 | variable/function | Read (Area) | Write (Area) | Called (Area) |
 | :--- | :---: | :---: | :---: |
-| pub(set) var a | 1, 2, 3, 4 | 1, 2, 3, 4 | |
-| pub var b | 1, 2, 3, 4 | 1, 2 | |
-| access(contract) var c | 1, 2, 3 | 1, 2 |
-| access(self) var d | 1, 2 | 1, 2 |
+| pub(set) var a | 1, 2, 3, 4 | 1, 2, 3 | |
+| pub var b | 1, 2, 3, 4 | 1 | |
+| access(contract) var c | 1, 2, 3 | 1 |
+| access(self) var d | 1 | 1 |
 | pub fun publicFunc |  |  | 1, 2, 3, 4 |
 | access(contract) fun contractFunc | | | 1, 2, 3 | 
-| access(self) fun privateFunc | | |  1, 2  |
+| access(self) fun privateFunc | | | 1 |
