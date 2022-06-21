@@ -39,6 +39,10 @@ pub contract Country {
     pub fun createState(): @State {
         return <- create State()
     }
+    
+    init() {
+    
+    }
 
 }
 ```
