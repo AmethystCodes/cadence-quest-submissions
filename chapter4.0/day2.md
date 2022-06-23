@@ -2,11 +2,11 @@
 
 **1. What does .link() do?**
 
-`.link()` creates a capability that can be accessed  
+`.link()` creates a capability that can be then be borrowed to get a reference to a stored object.  
 
 **2. In your own words (no code), explain how we can use resource interfaces to only expose certain things to the /public/ path.**
 
-Using resource interfaces, the developer can determine what is publically accessible. If there are certain functions or variables that should not be accessed, the developer can use a resource interface and only include the fields they want accessed. 
+Using resource interfaces, the developer can determine what is publically accessible. If there are certain functions or variables that should not be avaliable to all users, the developer can use a resource interface and only include the fields they want accessed. 
 
 **3. Deploy a contract that contains a resource that implements a resource interface.**
 
