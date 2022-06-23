@@ -1,6 +1,7 @@
 # Chapter 4.0 Day 2 Quests
 
 **1. What does .link() do?**
+
 `.link()` creates a capability that can be accessed  
 
 **2. In your own words (no code), explain how we can use resource interfaces to only expose certain things to the /public/ path.**
@@ -72,5 +73,31 @@ transaction() {
 ```
 
   * Run a script that tries to access a non-exposed field in the resource interface, and see the error pop up.
+```cadence
+import Country from 0x01
+
+pub fun main(address: Address): String {
+  let stateCapability: Capability<&Country.State{Country.IState}> =
+    getAccount(address).getCapability<&Country.State{Country.IState}>(/public/MyStateResource)
+
+  let stateResource: &Country.State{Country.IState} = stateCapability.borrow() ?? panic("No State Resource Found.")
+
+  return stateResource.stateBird // ERROR: member of restricted type is not accessible: stateBird 
+}
+
+```
 
   * Run the script and access something you CAN read from. Return it from the script.
+```cadence
+import Country from 0x01
+
+pub fun main(address: Address): String {
+  let stateCapability: Capability<&Country.State{Country.IState}> =
+    getAccount(address).getCapability<&Country.State{Country.IState}>(/public/MyStateResource)
+
+  let stateResource: &Country.State{Country.IState} = stateCapability.borrow() ?? panic("No State Resource Found.")
+
+  return stateResource.name
+}
+
+```
