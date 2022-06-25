@@ -1,4 +1,4 @@
-# Chapter 4.0 Day 3
+# Chapter 4.0 Day 3 Quests
 
 **1. Why did we add a Collection to this contract? List the two main reasons.** 
 
