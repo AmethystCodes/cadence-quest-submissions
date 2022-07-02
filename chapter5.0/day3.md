@@ -36,6 +36,10 @@ pub contract CryptoPoops: NonFungibleToken {
       self.luckyNumber = _luckyNumber
     }
   }
+  
+  pub resource interface ICollection {
+    pub fun borrowAuthNFT(id: UInt64): &NFT
+  }
 
   pub resource Collection: NonFungibleToken.Provider, NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic {
     pub var ownedNFTs: @{UInt64: NonFungibleToken.NFT}
@@ -102,13 +106,79 @@ pub contract CryptoPoops: NonFungibleToken {
 * Make `borrowAuthNFT` publically accessible
 ```cadence
 pub resource interface ICollection {
-    pub fun borrowAuthNFT(id: UInt64): &NonFungibleToken.NFT
+    pub fun borrowAuthNFT(id: UInt64): &NFT
   }
   
 // Add ICollection interface to `pub resource Collection: ..., ICollection {}`
 ```
 
+* Create Collection
+```cadence
+import NonFungibleToken from 0x02
+import CryptoPoops from 0x03
+
+transaction() {
+
+    prepare(signer: AuthAccount) {
+        signer.save(<- CryptoPoops.createEmptyCollection(), to: /storage/CryptoPoopsCollection)
+        signer.link<&CryptoPoops.Collection{NonFungibleToken.Receiver, NonFungibleToken.CollectionPublic, CryptoPoops.ICollection}>(/public/CryptoPoopsCollection, target: /storage/CryptoPoopsCollection)
+    }
+
+    execute {
+        log("CryptoPoops Collection saved to storage.")
+    }
+}
+```
+* Mint NFT - Must be signed by the account that deployed the contract
+```cadence
+import NonFungibleToken from 0x02
+import CryptoPoops from 0x03
+
+transaction(recipient: Address, name: String, favouriteFood: String, luckyNumber: Int) {
+  
+    prepare(signer: AuthAccount) {
+        let minter = signer.borrow<&CryptoPoops.Minter>(from: /storage/Minter)
+                        ?? panic("This signer is not the one who deployed the contract.")
+        
+        let recipientsCollection = getAccount(recipient).getCapability(/public/CryptoPoopsCollection)
+                                        .borrow<&CryptoPoops.Collection{NonFungibleToken.CollectionPublic}>()
+                                        ?? panic("Recipient does not have a Collection.")
+
+        let nft <- minter.createNFT(name: name, favouriteFood: favouriteFood, luckyNumber: luckyNumber)
+    
+        recipientsCollection.deposit(token: <- nft)
+    }
+
+    execute {
+        log("NFT was minted 🎉")
+    }
+}
+```
+
+* Script to display `getIDs()`
+```cadence
+import CryptoPoops from 0x03
+import NonFungibleToken from 0x02
+
+pub fun main(address: Address): [UInt64] {
+  let publicCollection = getAccount(address).getCapability(/public/CryptoPoopsCollection)
+                .borrow<&CryptoPoops.Collection{NonFungibleToken.CollectionPublic}>()
+                ?? panic("The address does not have a Collection.")
+
+  return publicCollection.getIDs()
+}
+```
+
 * Run a script to display the NFTs metadata for a certain `id`
 ```cadence
+import CryptoPoops from 0x03
+import NonFungibleToken from 0x02
 
+pub fun main(address: Address, id: UInt64): &CryptoPoops.NFT {
+    let publicCollection = getAccount(address).getCapability(/public/CryptoPoopsCollection)
+                            .borrow<&CryptoPoops.Collection{CryptoPoops.ICollection}>()
+                            ?? panic("Collection cannot be accessed.")
+    
+    return publicCollection.borrowAuthNFT(id: id)
+}
 ```
