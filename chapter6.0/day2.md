@@ -28,6 +28,14 @@ transaction(recipient: Address, name: String, favouriteColor: String, luckyNumbe
 ```
 
 **2. Run a script to read the new totalSupply using the Flow CLI**
+```cadence
+import BalloonBuddies from 0x02
+pub fun main(): UInt64 {
+  let supply = BalloonBuddies.totalSupply
+
+  return supply
+}
+```
 
 **3. Run a script to read the ids of NFTs in someone's collection using the Flow CLI**
 ```cadence
@@ -67,3 +75,15 @@ pub fun main(): UInt64 {
 }
 ```
 **6. Figure out how to read someone's GoatedGoats NFTs from their collection and run a script using the Flow CLI to do it.**
+
+Get GoatedGoats ID's from an address:
+```cadence
+import GoatedGoats from 0x2068315349bdfce5
+
+pub fun main(address: Address): [UInt64] {
+  let goatedGoatsCollection = getAccount(address).getCapability(GoatedGoats.CollectionPublicPath)
+                                .borrow<&GoatedGoats.Collection{GoatedGoats.GoatCollectionPublic}>()
+                                ?? panic("Address does not have a Goated Goats Collection")
+  return goatedGoatsCollection.getIDs()
+}
+```
